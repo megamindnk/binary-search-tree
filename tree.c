@@ -111,6 +111,21 @@ int count(tree *temp)
 
 	}
 }
+void mirror(struct tree *root)
+{
+	/*this function basically swaps the addresses of right and left nodes recursively thus creating a mirror BST*/
+	if(root!=NULL)
+	{
+		struct tree *temp;//create a variable to store addresses
+		
+		mirror(root->left);//move till leaf nodes
+		mirror(root->right);
+	
+		temp=root->left;//swap addresses
+		root->left=root->right;
+		root->right=temp;
+	}
+}
 
 
 void main()
@@ -119,12 +134,13 @@ void main()
 	int ch,key,flag;
 	while(1)
 	{
-		printf("\nenter choice");
-		printf("\n1. create");
-		printf("\n2.display");
-		printf("\n3.search");
-		printf("\n4.count the number of nodes");
-		printf("\n5.exit\n");
+		printf("\n-----------------enter choice----------------");
+		printf("\n 1.create");
+		printf("\n 2.display");
+		printf("\n 3.search");
+		printf("\n 4.count the number of nodes");
+		printf("\n 5.mirror the BST");
+		printf("\n 6.exit\n");
 		scanf("%d",&ch);
 		switch(ch)
 		{
@@ -133,7 +149,7 @@ void main()
 			case 2:printf("\nin which order u want to display");
 				fflush(stdin);
 				printf("\n\t a.post order\n\t b.inorder\n\t c.postorder\n");
-				scanf(" %c",&dchoice);//dont forget to add space before %c otherwise it will generate a bug
+				scanf(" %c",&dchoice);//dont forget to add a space before %c otherwise it will generate a bug
 				switch(dchoice)
 				{
 					case 'a':preorder(root);
@@ -153,7 +169,10 @@ void main()
 				printf("\nthe number of non leaf nodes are :-%d",nlcount);
 				printf("\nthe total count is :-%d",nlcount+lcount);
 				break;
-			case 5:exit(0);
+			case 5: mirror(root);
+				printf("\nmirrored successfully");
+				break;
+			case 6:exit(0);
 		}
 	}
 }
